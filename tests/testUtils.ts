@@ -21,3 +21,13 @@ export function mockDB(): Promise<TypeORM.Connection> {
     cache: false
   });
 }
+
+/**
+ * Clears database
+ *
+ * @export
+ * @returns {Promise<void>}
+ */
+export async function clearDB(): Promise<void> {
+  await Promise.all(TypeORM.getConnection().entityMetadatas.map(metadata => TypeORM.getManager().clear(metadata.name)));
+}
