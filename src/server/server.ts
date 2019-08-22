@@ -4,6 +4,8 @@ import { Container } from "typedi";
 
 import { authMiddleware, useAuthStrategy } from "@preterer/auth";
 
+import { controllers } from "../controllers/controllers";
+
 /**
  * Starts application server
  *
@@ -29,7 +31,7 @@ function setupControllers(app: Express): void {
   useContainer(Container);
   const routingControllersOptions: RoutingControllersOptions = {
     cors: true,
-    controllers: [],
+    controllers: controllers(),
 
     defaultErrorHandler: false
   };
