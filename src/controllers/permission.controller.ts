@@ -2,7 +2,7 @@ import { Controller, QueryParams, Get, Param, Post, Body, Put, Delete } from "ro
 import { Inject } from "typedi";
 
 import { Filters, EntityList } from "@preterer/typeorm-extensions";
-import { Permission, PermissionService } from "@preterer/auth";
+import { Permission, PermissionService, PermissionModel } from "@preterer/auth";
 
 /**
  * Controller of permissions
@@ -47,7 +47,7 @@ export class PermissionController {
    * @memberof PermissionController
    */
   @Post("/")
-  add(@Body() model: Permission): Promise<number> {
+  add(@Body() model: PermissionModel): Promise<number> {
     return this.permissionService.add(model).then(entity => entity.id);
   }
 
@@ -60,7 +60,7 @@ export class PermissionController {
    * @memberof PermissionController
    */
   @Put("/:id(//d+)")
-  update(@Param("id") id: number, model: Permission): Promise<number> {
+  update(@Param("id") id: number, model: PermissionModel): Promise<number> {
     return this.permissionService.update(id, model).then(entity => entity.id);
   }
 

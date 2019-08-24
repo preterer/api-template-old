@@ -75,4 +75,30 @@ export class UserController {
   delete(@Param("id") id: number): Promise<number> {
     return this.userService.delete(id);
   }
+
+  /**
+   * Add user role
+   *
+   * @param {number} id
+   * @param {number} roleId
+   * @returns {Promise<number>}
+   * @memberof UserController
+   */
+  @Put("/:id(\\d+)/role/:roleId(\\d+)")
+  addRole(@Param("id") id: number, @Param("roleId") roleId: number): Promise<number> {
+    return this.userService.roleAdd(id, roleId).then(user => user.id);
+  }
+
+  /**
+   * Removes user role
+   *
+   * @param {number} id
+   * @param {number} roleId
+   * @returns {Promise<number>}
+   * @memberof UserController
+   */
+  @Delete("/:id(\\d+)/role/:roleId(\\d+)")
+  removeRole(@Param("id") id: number, @Param("roleId") roleId: number): Promise<number> {
+    return this.userService.roleRemove(id, roleId).then(user => user.id);
+  }
 }

@@ -2,7 +2,7 @@ import { Controller, QueryParams, Get, Param, Post, Body, Put, Delete } from "ro
 import { Inject } from "typedi";
 
 import { Filters, EntityList } from "@preterer/typeorm-extensions";
-import { Role, RoleService } from "@preterer/auth";
+import { Role, RoleService, RoleModel } from "@preterer/auth";
 
 /**
  * Controller of roles
@@ -47,7 +47,7 @@ export class RoleController {
    * @memberof RoleController
    */
   @Post("/")
-  add(@Body() model: Role): Promise<number> {
+  add(@Body() model: RoleModel): Promise<number> {
     return this.roleService.add(model).then(entity => entity.id);
   }
 
@@ -60,7 +60,7 @@ export class RoleController {
    * @memberof RoleController
    */
   @Put("/:id(//d+)")
-  update(@Param("id") id: number, model: Role): Promise<number> {
+  update(@Param("id") id: number, model: RoleModel): Promise<number> {
     return this.roleService.update(id, model).then(entity => entity.id);
   }
 
