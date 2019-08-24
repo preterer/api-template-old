@@ -1,8 +1,8 @@
 import express, { Express } from "express";
-import { useContainer, useExpressServer, RoutingControllersOptions } from "routing-controllers";
+import { useContainer, useExpressServer, RoutingControllersOptions, Action } from "routing-controllers";
 import { Container } from "typedi";
 
-import { authMiddleware, useAuthStrategy } from "@preterer/auth";
+import { authMiddleware, useAuthStrategy, JWTPayload, checkAccess } from "@preterer/auth";
 
 import { controllers } from "../controllers/controllers";
 
@@ -31,9 +31,32 @@ function setupControllers(app: Express): void {
   useContainer(Container);
   const routingControllersOptions: RoutingControllersOptions = {
     cors: true,
-    controllers: controllers(),
+    defaultErrorHandler: false,
+    currentUserChecker: getCurrentUser,
+    authorizationChecker: checkPermissions,
 
-    defaultErrorHandler: false
+    controllers: controllers()
   };
   useExpressServer(app, routingControllersOptions);
+}
+
+/**
+ * Gets current user JWT payload
+ *
+ * @param {Action} action
+ * @returns {JWTPayload}
+ */
+function getCurrentUser(action: Action): JWTPayload {
+  return action.request.user;
+}
+
+/**
+ * Checks user permissions
+ *
+ * @param {Action} action
+ * @param {string[]} permissions
+ * @returns {Promise<boolean>}
+ */
+function checkPermissions(action: Action, permissions: string[]): Promise<boolean> {
+  return checkAccess(action.request.user, permissions);
 }
