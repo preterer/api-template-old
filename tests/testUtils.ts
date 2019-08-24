@@ -5,7 +5,7 @@ import {
   patchTypeORMRepositoryWithBaseRepository
 } from "typeorm-transactional-cls-hooked";
 
-import { Fundraiser } from "../src/entities/fundraiser.entity";
+import { User, Role, Permission } from "@preterer/auth";
 
 /**
  * Mocks in memory DB
@@ -19,7 +19,7 @@ export function mockDB(): Promise<TypeORM.Connection> {
   TypeORM.useContainer(Container);
   return TypeORM.createConnection({
     type: "sqljs",
-    entities: [Fundraiser],
+    entities: ["./src/entities/**/*.ts", Permission, Role, User],
     logger: "advanced-console",
     logging: ["error"],
     dropSchema: true,
