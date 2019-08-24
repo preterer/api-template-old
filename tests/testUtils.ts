@@ -13,11 +13,11 @@ import { User, Role, Permission } from "@preterer/auth";
  * @export
  * @returns
  */
-export function mockDB(): Promise<TypeORM.Connection> {
+export async function mockDB(): Promise<void> {
   initializeTransactionalContext();
   patchTypeORMRepositoryWithBaseRepository();
   TypeORM.useContainer(Container);
-  return TypeORM.createConnection({
+  await TypeORM.createConnection({
     type: "sqljs",
     entities: ["./src/entities/**/*.ts", Permission, Role, User],
     logger: "advanced-console",
@@ -26,6 +26,18 @@ export function mockDB(): Promise<TypeORM.Connection> {
     synchronize: true,
     cache: false
   });
+  await mockRootRole();
+}
+
+/**
+ * Mocks required root role
+ *
+ * @returns {Promise<Role>}
+ */
+function mockRootRole(): Promise<Role> {
+  const roleRepository = TypeORM.getRepository(Role);
+  const role = roleRepository.create({ name: "Root" });
+  return roleRepository.save(role);
 }
 
 /**
