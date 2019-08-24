@@ -29,7 +29,7 @@
       "   * @memberof $1Controller",
       "   */",
       "  @Get(\"/\")",
-      "  list(@QueryParams() filters: Filters): Promise<EntityList<$1>> {",
+      "  list(@QueryParams() filters?: Filters): Promise<EntityList<$1>> {",
       "    return this.$2Service.list(filters);",
       "  }",
       "",
