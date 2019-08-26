@@ -26,18 +26,6 @@ export async function mockDB(): Promise<void> {
     synchronize: true,
     cache: false
   });
-  await mockRootRole();
-}
-
-/**
- * Mocks required root role
- *
- * @returns {Promise<Role>}
- */
-function mockRootRole(): Promise<Role> {
-  const roleRepository = TypeORM.getRepository(Role);
-  const role = roleRepository.create({ name: "Root" });
-  return roleRepository.save(role);
 }
 
 /**
@@ -47,5 +35,5 @@ function mockRootRole(): Promise<Role> {
  * @returns {Promise<void>}
  */
 export async function clearDB(): Promise<void> {
-  await Promise.all(TypeORM.getConnection().entityMetadatas.map(metadata => TypeORM.getManager().clear(metadata.name)));
+  await Promise.all([Permission, Role, User].map(entity => TypeORM.getManager().clear(entity)));
 }

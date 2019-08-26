@@ -1,4 +1,5 @@
-import Container from "typedi";
+import * as TypeORM from "typeorm";
+import { Container } from "typedi";
 
 import { User, UserService, Permission, PermissionService, Role, RoleService } from "@preterer/auth";
 
@@ -9,8 +10,25 @@ import { User, UserService, Permission, PermissionService, Role, RoleService } f
  * @param {string} [name="Test"]
  * @returns {Promise<Permission>}
  */
-export function mockPermission(name = "Test", userId?: number, roleId?: number): Promise<Permission> {
-  return Container.get(PermissionService).add({ name, userId, roleId });
+export function mockPermission(
+  name = "Test",
+  userId?: number,
+  roleId?: number,
+  entityId?: string,
+  entityType?: string
+): Promise<Permission> {
+  return Container.get(PermissionService).add({ name, userId, roleId, entityId, entityType });
+}
+
+/**
+ * Mocks required root role
+ *
+ * @returns {Promise<Role>}
+ */
+function mockRootRole(): Promise<Role> {
+  const roleRepository = TypeORM.getRepository(Role);
+  const role = roleRepository.create({ name: "Root" });
+  return roleRepository.save(role);
 }
 
 /**
@@ -20,8 +38,10 @@ export function mockPermission(name = "Test", userId?: number, roleId?: number):
  * @param {string} [name="Test"]
  * @returns {Promise<Role>}
  */
-export function mockRole(name = "Test"): Promise<Role> {
-  return Container.get(RoleService).add({ name, parentId: 1 });
+export async function mockRole(name = "Test"): Promise<Role> {
+  const roleService = Container.get(RoleService);
+  const rootRole = (await roleService.getRoot()) || (await mockRootRole());
+  return roleService.add({ name, parentId: rootRole.id });
 }
 
 /**
