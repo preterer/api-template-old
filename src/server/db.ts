@@ -4,7 +4,6 @@ import { Container } from "typedi";
 import { User, Role, Permission } from "@preterer/auth";
 
 import { Config } from "../config/config";
-import { Fundraiser } from "../entities/fundraiser.entity";
 
 /**
  * Connects to applications database
