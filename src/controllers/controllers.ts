@@ -1,3 +1,8 @@
+import { AuthController } from "./auth.controller";
+import { PermissionController } from "./permission.controller";
+import { RoleController } from "./role.controller";
+import { UserController } from "./user.controller";
+
 /**
  * Registers controllers
  *
@@ -5,5 +10,5 @@
  * @returns {Function[]}
  */
 export function controllers(): Function[] {
-  return [];
+  return [AuthController, PermissionController, RoleController, UserController];
 }
