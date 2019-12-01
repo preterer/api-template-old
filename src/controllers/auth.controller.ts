@@ -1,8 +1,10 @@
-import { Controller, Post, Body } from "routing-controllers";
-import { DeepPartial } from "typeorm";
+import bodyParser from "body-parser";
+import { Response } from "express";
+import { Body, Controller, Post, Res, UseBefore } from "routing-controllers";
 import { Inject } from "typedi";
+import { DeepPartial } from "typeorm";
 
-import { UserService, LoginData, User } from "@preterer/auth";
+import { LoginData, User, UserService } from "@preterer/auth";
 
 /**
  * Authentication controller
@@ -11,6 +13,7 @@ import { UserService, LoginData, User } from "@preterer/auth";
  * @class AuthController
  */
 @Controller()
+@UseBefore(bodyParser.json())
 export class AuthController {
   @Inject()
   private readonly userService: UserService;
@@ -23,8 +26,8 @@ export class AuthController {
    * @memberof AuthController
    */
   @Post("/login")
-  login(@Body() loginData: LoginData): Promise<string> {
-    return this.userService.login(loginData);
+  login(@Body() loginData: LoginData, @Res() response: Response): Promise<string | Response> {
+    return this.userService.login(loginData).catch(error => response.status(401).send(error.message));
   }
 
   /**
