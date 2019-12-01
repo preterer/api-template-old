@@ -1,7 +1,7 @@
 import { Service } from "typedi";
 
-import { DBConfig } from "./db.config";
 import { ApplicationConfig } from "./app.config";
+import { DBConfig } from "./db.config";
 
 /**
  * Application config

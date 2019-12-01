@@ -1,8 +1,8 @@
 import express, { Express } from "express";
-import { useContainer, useExpressServer, RoutingControllersOptions, Action } from "routing-controllers";
+import { Action, RoutingControllersOptions, useContainer, useExpressServer } from "routing-controllers";
 import { Container } from "typedi";
 
-import { authMiddleware, useAuthStrategy, JWTPayload, checkAccess } from "@preterer/auth";
+import { authMiddleware, checkAccess, JWTPayload, useAuthStrategy } from "@preterer/auth";
 
 import { controllers } from "../controllers/controllers";
 

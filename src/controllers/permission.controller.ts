@@ -1,8 +1,8 @@
-import { Controller, QueryParams, Get, Param, Post, Body, Put, Delete } from "routing-controllers";
+import { Body, Controller, Delete, Get, Param, Post, Put, QueryParams } from "routing-controllers";
 import { Inject } from "typedi";
 
-import { Filters, EntityList } from "@preterer/typeorm-extensions";
-import { Permission, PermissionService, PermissionModel } from "@preterer/auth";
+import { Permission, PermissionModel, PermissionService } from "@preterer/auth";
+import { EntityList, Filters } from "@preterer/typeorm-extensions";
 
 /**
  * Controller of permissions

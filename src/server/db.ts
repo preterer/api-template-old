@@ -1,7 +1,7 @@
-import * as TypeORM from "typeorm";
 import { Container } from "typedi";
+import * as TypeORM from "typeorm";
 
-import { User, Role, Permission } from "@preterer/auth";
+import { Permission, Role, User } from "@preterer/auth";
 
 import { Config } from "../config/config";
 

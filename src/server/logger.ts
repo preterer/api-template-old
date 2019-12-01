@@ -1,5 +1,5 @@
-import Container from "typedi";
 import { configure, getLogger } from "log4js";
+import Container from "typedi";
 
 import { Config } from "../config/config";
 

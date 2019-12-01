@@ -6,6 +6,12 @@
 npm install
 ```
 
+## Default data
+
+Users:
+
+- `admin` / `adminadmin`
+
 ## Development server
 
 ```
