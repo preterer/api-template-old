@@ -1,4 +1,3 @@
-import bcrypt from "bcrypt";
 import { QueryRunner } from "typeorm";
 
 import { Role, User } from "@preterer/auth";
@@ -36,7 +35,7 @@ export async function createUser(
   password: string,
   roles?: Role[]
 ): Promise<User> {
-  const user = queryRunner.manager.create(User, { login, password: await bcrypt.hash(password, 12) });
+  const user = queryRunner.manager.create(User, { login, password: password });
   if (roles) {
     user.roles = Promise.resolve(roles);
   }
