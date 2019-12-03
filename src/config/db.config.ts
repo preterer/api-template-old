@@ -1,3 +1,5 @@
+import { LoggerOptions } from "typeorm/logger/LoggerOptions";
+
 /**
  * Configuration of database
  *
@@ -54,20 +56,20 @@ export class DBConfig {
   password: string = process.env.DB_PASSWORD;
 
   /**
+   * Logging type
+   *
+   * @type {string}
+   * @memberof DBConfig
+   */
+  logging: LoggerOptions = process.env.DB_LOGGING as LoggerOptions;
+
+  /**
    * Allow TypeORM to automatically synchronize database
    *
    * @type {boolean}
    * @memberof DBConfig
    */
   synchronize: boolean = process.env.DB_SYNCHRONIZE === "true";
-
-  /**
-   * Enable logging
-   *
-   * @type {boolean}
-   * @memberof DBConfig
-   */
-  logging: boolean = process.env.DB_LOGGING === "true";
 
   /**
    * Allow to drop schema
