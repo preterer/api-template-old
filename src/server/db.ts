@@ -1,8 +1,6 @@
 import { Container } from "typedi";
 import * as TypeORM from "typeorm";
 
-import { Permission, Role, User } from "@preterer/auth";
-
 import { Config } from "../config/config";
 
 /**
@@ -45,5 +43,5 @@ function connectionConfig(): TypeORM.ConnectionOptions {
  * @returns {((Function | string)[])}
  */
 function entities(): (Function | string)[] {
-  return ["dist/entities/**/*.js", Permission, Role, User];
+  return ["dist/entities/**/*.js", "node_modules/@preterer/auth/dist/entities/**/*.js"];
 }
