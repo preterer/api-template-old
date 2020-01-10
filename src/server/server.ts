@@ -1,3 +1,4 @@
+import bodyParser from "body-parser";
 import express, { Express } from "express";
 import { Action, RoutingControllersOptions, useContainer, useExpressServer } from "routing-controllers";
 import { Container } from "typedi";
@@ -5,6 +6,7 @@ import { Container } from "typedi";
 import { authMiddleware, checkAccess, JWTPayload, useAuthStrategy } from "@preterer/auth";
 
 import { controllers } from "../controllers/controllers";
+import { logRequests } from "./logger";
 
 /**
  * Starts application server
@@ -13,6 +15,8 @@ import { controllers } from "../controllers/controllers";
  */
 export function startServer(): void {
   const app = express();
+  app.use(bodyParser.json());
+  app.use(logRequests);
 
   setupControllers(app);
 
